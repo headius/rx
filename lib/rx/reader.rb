@@ -45,14 +45,17 @@ module RX
     end
 
     def one_char
-      if @in_index == @in_buf.length
-        @in_buf = @input.next_chars
-        @in_index = 0
-        return nil if @in_buf == nil
+      buf = @in_buf
+      index = @in_index
+      
+      if index == buf.length
+        buf = @in_buf = @input.next_chars
+        index = @in_index = 0
+        return nil if buf == nil
       end
 
-      c = @in_buf.at(@in_index)
-      @in_index += 1
+      c = buf.at(index)
+      @in_index = index + 1
       c
     end
 
