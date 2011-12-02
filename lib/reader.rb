@@ -51,7 +51,7 @@ module RX
         return nil if @in_buf == nil
       end
 
-      c = @in_buf[@in_index]
+      c = @in_buf.at(@in_index)
       @in_index += 1
       c
     end
