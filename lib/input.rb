@@ -6,19 +6,19 @@ module RX
 
   class Input
 
-    @@lt = 0x3c
-    @@question = 0x3f
-    @@UTF8 = :"UTF-8"
-    @@ISO8859 = :"ISO-8859"
-    @@UTF16LE = :"UTF-16LE"
-    @@UTF16BE = :"UTF-16BE"
-    @@ASCII = :ASCII
-    @@LIKEASCII = :"LIKE-ASCII"
-    @@HIGH_SURROGATE_BASE = 0xD800
-    @@HIGH_SURROGATE_MAX = 0xDBFF
-    @@LOW_SURROGATE_BASE = 0xDC00
-    @@LOW_SURROGATE_MAX = 0xDFFF
-    @@SURROGATE_OFFSET = 0x10000 - (0xD800 << 10) - 0xDC00
+    LT = 0x3c
+    QUESTION = 0x3f
+    UTF8 = :"UTF-8"
+    ISO8859 = :"ISO-8859"
+    UTF16LE = :"UTF-16LE"
+    UTF16BE = :"UTF-16BE"
+    ASCII = :ASCII
+    LIKEASCII = :"LIKE-ASCII"
+    HIGH_SURROGATE_BASE = 0xD800
+    HIGH_SURROGATE_MAX = 0xDBFF
+    LOW_SURROGATE_BASE = 0xDC00
+    LOW_SURROGATE_MAX = 0xDFFF
+    SURROGATE_OFFSET = 0x10000 - (0xD800 << 10) - 0xDC00
 
     attr_reader :encoding
 
@@ -60,17 +60,17 @@ module RX
       return unless buf
 
       case @encoding
-      when @@UTF8
+      when UTF8
         while (RX::byte_at(buf, -1) & 0x80) == 0x80
           # argh, stopped reading in the middle of a character
           buf = grow_buf buf
         end
         @char_buf = buf.unpack 'U*'
         
-      when @@ISO8859, @@LIKEASCII, @@ASCII
+      when ISO8859, LIKEASCII, ASCII
         @char_buf = buf.unpack 'C*'
 
-      when @@UTF16LE, @@UTF16BE
+      when UTF16LE, UTF16BE
         buf = grow_buf(buf) if (buf.length % 2) != 0
         last = (RX::byte_at(buf, -1) << 8) | RX::byte_at(buf, -2)
         if surrogate?(last)
@@ -100,31 +100,31 @@ module RX
     def encoding= requested
       # if not declared
       if requested == nil
-        if @encoding == @@LIKEASCII
-          @encoding = @@UTF8
+        if @encoding == LIKEASCII
+          @encoding = UTF8
         end
 
         # it was declared; consistency check
       else
         case requested
         when /utf-?8/i
-          if @encoding == @@UTF8
+          if @encoding == UTF8
             # cool
-          elsif @encoding == @@LIKEASCII
-            @encoding = @@UTF8
+          elsif @encoding == LIKEASCII
+            @encoding = UTF8
           else
             raise(SyntaxError,
               "Declared Encoding '#{requested}' incompatible with input")
           end
         when /iso-?8859-1/i
-          if @encoding == @@LIKEASCII
-            @encoding = @@ISO8859
+          if @encoding == LIKEASCII
+            @encoding = ISO8859
           else
             raise(SyntaxError,
               "Declared Encoding '#{requested}' incompatible with input")
           end
         when /ascii/i
-          if @encoding == @@LIKEASCII
+          if @encoding == LIKEASCII
             @encoding = @ASCII
           else
             raise(SyntaxError,
@@ -138,7 +138,7 @@ module RX
     end
 
     def utf16_char b1, b2
-      if @encoding == @@UTF16BE
+      if @encoding == UTF16BE
         (b1 << 8) | b2
       else
         (b2 << 8) | b1
@@ -146,7 +146,7 @@ module RX
     end
 
     def surrogate? c
-      c >= @@HIGH_SURROGATE_BASE && c <= @@LOW_SURROGATE_MAX
+      c >= HIGH_SURROGATE_BASE && c <= LOW_SURROGATE_MAX
     end
     
     # NB relies on @encoding
@@ -158,7 +158,7 @@ module RX
     end
 
     def combine_surrogates(s_hi, s_lo)
-      lead = (s_hi << 10) + s_lo + @@SURROGATE_OFFSET
+      (s_hi << 10) + s_lo + SURROGATE_OFFSET
     end
 
     def first_utf8
@@ -197,31 +197,31 @@ module RX
         raise(IOError, $!)
       end
       
-      if b0 == @@lt
+      if b0 == LT
         save b0, b1
 
         # '<', ASCII-like
-        if (b1 == @@question)
+        if (b1 == QUESTION)
 
           # <? an XML declaration
-          return @@LIKEASCII
+          return LIKEASCII
 
           # < without ?, gotta be UTF8
         else
-          return @@UTF8
+          return UTF8
         end
 
         # check for a BOM
       elsif b0 == 0xfe && b1 == 0xff
-        return @@UTF16BE
+        return UTF16BE
 
       elsif b0 == 0xff && b1 == 0xfe
-        return @@UTF16LE
+        return UTF16LE
 
       else
         # doesn't start with '<' or a BOM
         save b0, b1
-        return @@UTF8
+        return UTF8
       end
     end
 

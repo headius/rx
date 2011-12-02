@@ -1,5 +1,3 @@
-require 'reader'
-
 module RX
 
   class QName

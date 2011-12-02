@@ -397,7 +397,6 @@ module RX
     # to-do; figure out what kind of accessor methods are interesting
     def initialize strings, reader
       @namespaces = { }
-      t = strings[0].ustr
       @strings = QName.scan(strings, @namespaces, reader)
       unless @strings.kind_of? Array
         raise(SyntaxError, @strings)
