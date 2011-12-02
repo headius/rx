@@ -9,9 +9,8 @@ require 'set'
 def make_char_classes(outdir, support = STDOUT)
 
   support.puts "  class CharClass"
-  support.puts "    def CharClass.load_char_classes"
-  support.puts "      @@points = {}"
-  support.puts "      @@ranges = {}"
+  support.puts "    POINTS = {}"
+  support.puts "    RANGES = {}"
 
   digit = XMLChars.new(outdir, 'Digit')
   combining = XMLChars.new(outdir, 'CombiningChar')
@@ -40,7 +39,6 @@ def make_char_classes(outdir, support = STDOUT)
   name_start.merge! letter
   name_start.print('NameStart', support)
 
-  support.print "    end\n\n"
   support.print "  end\n\n"
 end
 
@@ -76,7 +74,7 @@ class XMLChars
     @points = @points.map { |a| (a.kind_of? String) ? a : format("0x%04x", a) }.sort
     @ranges = @ranges.sort
     on_line = 0
-    out.print "      @@points['#{name}'] = [\n        "
+    out.print "    POINTS['#{name}'] = [\n        "
     @points.each do |p|
       out.print "#{p}, "
       on_line += 1
@@ -86,7 +84,7 @@ class XMLChars
       end
     end
     out.print "\n      ]\n"
-    out.print "      @@ranges['#{name}'] = [\n        "
+    out.print "    RANGES['#{name}'] = [\n        "
     on_line = 0
     @ranges.each do |r|
       out.print "#{r}, "
@@ -96,6 +94,6 @@ class XMLChars
         on_line = 0
       end
     end
-    out.print "\n      ]\n\n"
+    out.print "\n    ]\n\n"
   end
 end

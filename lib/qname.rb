@@ -1,7 +1,7 @@
 module RX
 
   class QName
-    @@colon = 0x3a
+    COLON = 0x3a
     attr_reader :namespace, :local_part, :prefix
 
     def initialize(namespace, prefix, local_part)
@@ -17,7 +17,7 @@ module RX
     def QName::split(a)
       prefix = ''
       local = ''
-      colon_at = a.index(@@colon)
+      colon_at = a.index(COLON)
       if colon_at
         prefix = a[0 ... colon_at].ustr # note three dots
         local = a[colon_at + 1 .. -1].ustr

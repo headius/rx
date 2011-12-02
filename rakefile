@@ -5,7 +5,12 @@ task :test do
   ruby "-Ilib test/tc_rexml.rb"
 end
 
-CHARCLASSES = FileList[ "lib/machine_builder.rb", "lib/autom" , 'lib/cc/*' ]
+CHARCLASSES = FileList[
+  "lib/machine_builder.rb",
+  "lib/make_charclasses.rb",
+  "lib/autom" ,
+  'lib/cc/*' ]
+
 file 'lib/support.rb' => CHARCLASSES do
   ruby "-Ilib lib/machine_builder.rb lib/autom lib"
 end

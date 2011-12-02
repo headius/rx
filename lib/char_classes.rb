@@ -1,7 +1,7 @@
 module RX
 
   class CharClass
-    @@classes = {
+    CLASSES = {
       'S' => " \t\n\r",
       'NameStart' => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
       'NameC' =>
@@ -15,15 +15,15 @@ module RX
     # from XML 1.0 "#x9 | #xA | #xD | [#x20-#xD7FF] "
     dot = [ 0x9, 0xa, 0xd ]
     0x20.upto(127) { |c| dot << c }
-    @@classes['.'] = dot.pack('C*')
+    CLASSES['.'] = dot.pack('C*')
 
     def CharClass.bytes(classname)
-      @@classes[classname]
+      CLASSES[classname]
     end
 
     def CharClass.is_in(c, class_name)
-      @@points[class_name].index(c) ||
-        @@ranges[class_name].any? { |r| r.member?(c) }
+      POINTS[class_name].index(c) ||
+        RANGES[class_name].any? { |r| r.member?(c) }
     end
   end
 end

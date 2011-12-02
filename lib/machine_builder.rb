@@ -190,7 +190,7 @@ class MachineBuilder
   end
 
   def write_fallbacks(support)
-    support.print "    @@fallbacks = {\n      "
+    support.print "    FALLBACKS = {\n      "
     on_line = 0
     @states_in_order.each do |state|
       support.print "#{@states[state]} => #{@states[@fallbacks[state]]}, "
@@ -204,7 +204,7 @@ class MachineBuilder
   end
 
   def write_error_messages(support)
-    support.print "    @@error_messages = {\n      "
+    support.print "    ERROR_MESSAGES = {\n      "
     on_line = 0
     @states_in_order.each do |state|
       msg = @error_messages[state]
@@ -221,7 +221,7 @@ class MachineBuilder
   end
 
   def name_classes(support)
-    support.print "    @@state_InDoc = #{@states['InDoc']}\n\n"
+    support.print "    STATE_INDOC = #{@states['InDoc']}\n\n"
     on_line = 0
     support.print "    STATE_NAMES = {\n        "
     lookup = @states.invert

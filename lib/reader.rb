@@ -35,8 +35,6 @@ module RX
     here = File.dirname(__FILE__)
     MACHINE = File.read("#{here}/machine").unpack('C*')
     ACTIONS = File.read("#{here}/actions").unpack('C*')
-    
-    CharClass.load_char_classes
 
     def namespace_binding(prefix)
       @element_stack.reverse_each do |element|
