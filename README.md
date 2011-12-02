@@ -35,3 +35,9 @@ to match REXML's user-facing APIs.
 
 Commit rights will be given freely to anyone who wants to
 work on this.
+
+Tim says: I have some cycles. I'm sort of out of ideas on
+how-to-make-it-run-fast, but if someone can break through 
+that logjam, I'd commit to maintaining the automaton DSL
+and actual XML-specific code; even adding proper entity 
+support (yecch).  And XPath support.
