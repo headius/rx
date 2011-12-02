@@ -1,8 +1,8 @@
-require 'input'
-require 'char_classes'
-require 'support'
-require 'null_api'
-require 'qname'
+require 'rx/input'
+require 'rx/char_classes'
+require 'rx/support'
+require 'rx/null_api'
+require 'rx/qname'
 
 module RX
 

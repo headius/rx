@@ -2,8 +2,8 @@ $:.unshift File.join(File.dirname(__FILE__), "..", "src")
 
 require 'test/unit'
 require 'rexml/document'
-require 'reader'
-require 'rexml'
+require 'rx'
+require 'rx/rexml'
 
 class TestInput < Test::Unit::TestCase
 

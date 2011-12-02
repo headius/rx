@@ -1,7 +1,7 @@
 $:.unshift File.join(File.dirname(__FILE__), "..", "lib")
 
 require 'test/unit'
-require 'input.rb'
+require 'rx/input'
 
 class Dummy1
   def initialize

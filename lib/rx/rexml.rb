@@ -1,4 +1,4 @@
-require 'reader'
+require 'rx/reader'
 
 module RX
 

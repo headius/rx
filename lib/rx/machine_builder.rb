@@ -1,5 +1,5 @@
-require 'char_classes'
-require 'make_charclasses'
+require 'rx/char_classes'
+require 'rx/make_charclasses'
 
 class MachineBuilder
 

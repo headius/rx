@@ -1,8 +1,7 @@
 $:.unshift File.join(File.dirname(__FILE__), "..", "lib")
 
 require 'test/unit'
-require 'qname.rb'
-require 'reader.rb'
+require 'rx'
 
 
 class TestInput < Test::Unit::TestCase
