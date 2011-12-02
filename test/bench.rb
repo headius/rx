@@ -71,14 +71,14 @@ end
 
 (ARGV[0] || 5).to_i.times do
   Benchmark.bm(20) do |bm|
-    # bm.report 'REXML' do
-    #   p_1 = L.new
-    #   f = 'test/o-0678.xml'
-    #   parser = nil
-    #   File.open(f) do |file|
-    #     REXML::Document.parse_stream(file, p_1)
-    #   end
-    # end
+    bm.report 'REXML' do
+      p_1 = L.new
+      f = 'test/o-0678.xml'
+      parser = nil
+      File.open(f) do |file|
+        REXML::Document.parse_stream(file, p_1)
+      end
+    end
     
     bm.report 'RX' do
       p_1 = L.new
