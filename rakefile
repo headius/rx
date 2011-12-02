@@ -1,0 +1,11 @@
+task :default => [ 'src/support.rb' ]
+task :test do
+  sh "ruby test/tc_input.rb"
+  sh "ruby test/tc_qname.rb"
+  sh "ruby test/tc_rexml.rb"
+end
+
+CHARCLASSES = FileList[ "src/machine_builder.rb", "src/autom" , 'src/cc/*' ]
+file 'src/support.rb' => CHARCLASSES do
+  sh "cd src && ruby machine_builder.rb autom ."
+end
