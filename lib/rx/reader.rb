@@ -140,7 +140,7 @@ module RX
         if c > 127
         
           # do any character-class transitions apply?
-          class_trans = NAME_CLASS_TRANSITIONS[@state]
+          class_trans = NAME_CLASS_TRANSITIONS.at(@state)
           if class_trans == :xml_char
             
             # none apply.  If it's an illegal character, signal with 0
@@ -173,11 +173,11 @@ module RX
 
         index = (@state * 128) + b
         @to = nil
-        command = ACTIONS[index]
+        command = ACTIONS.at(index)
         action = do_action(command, c) if command != 0
         
         # turn crank unless action already set the next state
-        @to = MACHINE[index] unless @to
+        @to = MACHINE.at(index) unless @to
         
         # debug(c, index)
         

@@ -41,14 +41,19 @@ module RX
     end
 
     def next_chars
-      if @char_index < @char_buf.length
-        s = @char_buf[@char_index .. -1]
+      buf = @char_buf
+      index = @char_index
+      
+      if index < buf.length
+        s = buf[index .. -1]
       else
         next_buf
-        return nil unless @char_buf
-        s = @char_buf
+        buf = @char_buf
+        return nil unless buf
+        s = buf
       end
-      @char_index = @char_buf.length
+      
+      @char_index = buf.length
       s
     end
 
