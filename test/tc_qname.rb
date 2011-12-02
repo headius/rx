@@ -1,4 +1,4 @@
-$:.unshift File.join(File.dirname(__FILE__), "..", "src")
+$:.unshift File.join(File.dirname(__FILE__), "..", "lib")
 
 require 'test/unit'
 require 'qname.rb'

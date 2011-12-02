@@ -124,7 +124,7 @@ class MachineBuilder
         
       support.print "  end\n\n"
 
-      make_char_classes support
+      make_char_classes @out_dir, support
       
       support.puts "end"
     end
@@ -299,4 +299,4 @@ class MachineBuilder
 
 end
 
-MachineBuilder.build('autom', '.')
+MachineBuilder.build(ARGV[0] || 'autom', ARGV[1] || '.')

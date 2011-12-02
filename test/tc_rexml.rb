@@ -1,4 +1,4 @@
-$:.unshift File.join(File.dirname(__FILE__), "..", "src")
+$:.unshift File.join(File.dirname(__FILE__), "..", "lib")
 
 require 'test/unit'
 require 'rexml/document'
@@ -12,19 +12,15 @@ class TestInput < Test::Unit::TestCase
     p_1 = L.new
     p_2 = L.new
     f = 'test/o-0678.xml'
-    parser = nil
-    if ENV['TESTING'] == 'REXML'
-      puts "Testing REXML"
-      parser = REXML::Document.parse_stream(File.new(f), p_1)
-    else
-      puts "Testing RX"
-      parser = RX::Reader.new(File.new(f), RX::RXToStreamListener.new(p_2))
-      parser.go
-    end
     
+    # parse with REXML
+    REXML::Document.parse_stream(File.new(f), p_1)
     
-    exit
-
+    # parse with RX
+    parser = RX::Reader.new(File.new(f), RX::RXToStreamListener.new(p_2))
+    parser.go
+    
+    # compare
     assert_equal(p_1.pi_count, p_2.pi_count, "PI count")
     assert_equal(p_1.element_count, p_2.element_count, "Element count")
     assert_equal(p_1.para_count, p_2.para_count, "Paragraph count")

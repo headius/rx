@@ -6,25 +6,25 @@
 
 require 'set'
 
-def make_char_classes(support = STDOUT)
+def make_char_classes(outdir, support = STDOUT)
 
   support.puts "  class CharClass"
   support.puts "    def CharClass.load_char_classes"
   support.puts "      @@points = {}"
   support.puts "      @@ranges = {}"
 
-  digit = XMLChars.new('Digit')
-  combining = XMLChars.new('CombiningChar')
-  extender = XMLChars.new('Extender')
-  base = XMLChars.new('BaseChar')
-  ideographic = XMLChars.new('Ideographic')
+  digit = XMLChars.new(outdir, 'Digit')
+  combining = XMLChars.new(outdir, 'CombiningChar')
+  extender = XMLChars.new(outdir, 'Extender')
+  base = XMLChars.new(outdir, 'BaseChar')
+  ideographic = XMLChars.new(outdir, 'Ideographic')
 
-  letter = XMLChars.new
+  letter = XMLChars.new outdir
   letter.merge! base
   letter.merge! ideographic
 
   # NameC
-  name_char = XMLChars.new
+  name_char = XMLChars.new outdir
   # no ':' for namespace reasons
   name_char.points = [ '.'.unpack('U*')[0], '-'.unpack('U*')[0], 
     '_'.unpack('U*')[0] ]
@@ -35,7 +35,7 @@ def make_char_classes(support = STDOUT)
   name_char.print('NameChar', support)
 
   # NameStart
-  name_start = XMLChars.new
+  name_start = XMLChars.new outdir
   name_start.points = [ '_'.unpack('U*')[0] ]
   name_start.merge! letter
   name_start.print('NameStart', support)
@@ -47,13 +47,13 @@ end
 class XMLChars
   attr_accessor :points, :ranges
 
-  def initialize(name = nil)
+  def initialize(outdir, name = nil)
     @points = []
     @ranges = []
 
     return unless name
     
-    x = File.read("cc/#{name}")
+    x = File.read("#{outdir}/cc/#{name}")
     x = x.strip.split(/\s*\|\s*/)
     x.each do |cr|
       if cr =~ /^\[.x(....)-.x(....)\]$/

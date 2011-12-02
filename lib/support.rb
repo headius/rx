@@ -531,7 +531,7 @@ module RX
       :action_68,
     ]
     def do_action(i, c)
-      send ACTION_DISPATCHER[i], c if i != 0
+      send ACTION_DISPATCHER[i], c
     end
 
     NAME_CLASS_TRANSITIONS = [
