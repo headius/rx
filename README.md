@@ -12,7 +12,7 @@ several years ago. I (@headius) have made a few small
 optimizations.
 
 Currently, the benchmark (test/bench.rb) indicates that
-on JRuby, RX runs about 1.7x slower than REXML for parsing
+on JRuby, RX runs about 10% slower than REXML for parsing
 a large XML file On Ruby 1.9.2, the ratio is above 2x.
 
 Plans
